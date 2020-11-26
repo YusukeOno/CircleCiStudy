@@ -22,9 +22,9 @@ jobs:
     docker:
       - image: "cimg/base:stable"
     steps:
-      - run: echo "my_test_job"
+      - run: echo "my_test_job2"
   my_deploy_job:
     docker:
       - image: "cimg/base:stable"
     steps:
-      - run: echo "my_deploy_job"
+      - run: echo "my_deploy_job2"
