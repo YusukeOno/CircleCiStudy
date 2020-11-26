@@ -17,3 +17,14 @@ workflows:
       - my_deploy_job:
           requires:
             - pause_workflow
+jobs:
+  my_test_job:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - run: echo "my_test_job"
+  my_deploy_job:
+    docker:
+      - image: "cimg/base:stable"
+    steps:
+      - run: echo "my_deploy_job"
