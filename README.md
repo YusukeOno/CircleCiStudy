@@ -19,6 +19,10 @@ https://circleci.com/docs/ja/2.0/local-cli/
 $ circleci config validate -c [config.ymlへのファイルパス]
 ```
 
+### CIをスキップしたい場合
+
+コミットメッセージに [ci skip] または [skip ci] とキーワードを記述する。
+
 ### 制約事項
 
 ローカル環境にて実行することで、設定ファイルのチェックができますが、ワークフローの利用ができないため、単体ジョブの実行のみとなります。
