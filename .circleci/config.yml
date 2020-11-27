@@ -1,30 +1,37 @@
-version: "2.1"
-orbs:
-  slack: circleci/slack@4.0
-workflows:
-  on-hold-example:
-    jobs:
-      - my_test_job
-      - slack/on-hold:
-          context: slack-secrets
-          requires:
-            - my_test_job
-      - pause_workflow:
-          requires:
-            - my_test_job
-            - slack/on-hold
-          type: approval
-      - my_deploy_job:
-          requires:
-            - pause_workflow
+version: 2.1
+executors: # 複数のジョブで再利用可能な実行環境を定義
+  default: # デフォルトのDockerイメージ
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/repo
+
 jobs:
-  my_test_job:
-    docker:
-      - image: "cimg/base:stable"
+  setup: # 依存パッケージのインストールを行い実行環境を構築するジョブ
+    executor: default
     steps:
-      - run: echo "my_test_job"
-  my_deploy_job:
-    docker:
-      - image: "cimg/base:stable"
+      - checkout
+      - run:
+          name: Nodeモジュールのインストール
+          command: yarn install
+      - persist_to_workspace: # node_modules を永続化
+          root: ~/repo
+          paths:
+            - node_modules
+  test_jest: # テスト実行ジョブ
+    executor: default
     steps:
-      - run: echo "my_deploy_job"
+      - checkout
+      - attach_workspace: # node_modules をダウンロード
+          at: .
+      - run:
+          name: Jestを実行
+          command: npx jest --ci --maxWorkers=2 # オプションを指定してテストコマンドを実行
+
+workflows:
+  version: 2
+  buid_test:
+    jobs:
+      - setup
+      - test_jest:
+          requires: # setupの後に実行
+            - setup
