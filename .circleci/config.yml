@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.2.0
+  aws-ecs: circleci/aws-ecs@1.2.0
 workflows:
   build-and-deploy:
     jobs:
@@ -8,3 +9,11 @@ workflows:
           account-url: AWS_ECR_ACCOUNT_URL
           repo: "nginx"
           tag: "${CIRCLE_SHA1}"
+
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: "circleci-book-task"
+          service-name: "circleci-book-service"
+          cluster-name: "circleci-book-cluster"
+          container-image-name-updates: "container=circleci-book-container,image-and-tag=${AWS_ECR_ACCOUNT_URL}/nginx:${CIRCLE_SHA1}"
