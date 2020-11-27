@@ -36,7 +36,7 @@ $ ssh -T git@github.com
 Hi YusukeOno! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-SSHデバッグを実行するとジョブはSSH接続待機状態となり、最後のステップが終わっても待機状態が維持されますので、ジョブをキャンセルして終了状態にする必要があります。
+SSHデバッグを実行するとジョブはSSH接続待機状態となり、最後のステップが終わっても待機状態が維持されます。また、SSHログアウトしても、待機状態が維持されます。なので、ジョブをキャンセルして終了状態にする必要があります。
 
 ### 制約事項
 
