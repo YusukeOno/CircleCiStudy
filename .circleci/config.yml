@@ -25,7 +25,7 @@ jobs:
           at: .
       - run:
           name: Jestを実行
-          command: npx jest --ci --maxWorkers=2 # オプションを指定してテストコマンドを実行
+          command: echo 'npx jest --ci --maxWorkers=2' # オプションを指定してテストコマンドを実行
 
 workflows:
   version: 2
