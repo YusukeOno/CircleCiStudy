@@ -21,7 +21,22 @@ $ circleci config validate -c [config.ymlへのファイルパス]
 
 ### CIをスキップしたい場合
 
-コミットメッセージに [ci skip] または [skip ci] とキーワードを記述する。
+コミットメッセージに ```[ci skip]``` または ```[skip ci]``` とキーワードを記述します。
+
+### SSHデバッグしたい場合
+
+CircleCIで実行されたジョブのコンテナーにSSHログインを行うことができます。これによりconfig.ymlを編集せず直接ターミナルから操作してコマンドの実行確認ができます。
+
+SSh接続には、連携しているGitHubアカウントのSSHキーが必要です。
+
+以下のコマンドでGitHubへのSSH接続確認を行えます。
+
+```
+$ ssh -T git@github.com
+Hi YusukeOno! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+SSHデバッグを実行するとジョブはSSH接続待機状態となり、最後のステップが終わっても待機状態が維持されますので、ジョブをキャンセルして終了状態にする必要があります。
 
 ### 制約事項
 
