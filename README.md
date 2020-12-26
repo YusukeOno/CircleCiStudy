@@ -19,6 +19,12 @@ https://circleci.com/docs/ja/2.0/local-cli/
 $ circleci config validate -c [config.ymlへのファイルパス]
 ```
 
+### job単体での実行
+
+```
+$ circleci local execute --job [JOB_NAME]
+```
+
 ### CIをスキップしたい場合
 
 コミットメッセージに ```[ci skip]``` または ```[skip ci]``` とキーワードを記述します。
